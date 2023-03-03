@@ -13,6 +13,7 @@ class SupplierController extends Controller
 {
     public function SupplierAll()
     {
+        //latest()is the equivalent to orderBy('created_at', 'desc')
         $suppliers = Supplier::latest()->get();
         return view('backend.supplier.supplier_all', compact('suppliers'));
     } //End Method
