@@ -86,7 +86,7 @@ class CustomerController extends Controller
             return redirect()->route('customer.all')->with($notification);
         } //end else
     } //End method
-    public function customerDelete($id){
+    public function CustomerDelete($id){
         $customers = Customer::findOrFail($id);
         $img = $customers->customer_image;
         unlink($img);
