@@ -96,6 +96,8 @@ Route::controller(SupplierController::class)->group(function () {
  Route::controller(DefaultController::class)->group(function () {
     Route::get('/get-category', 'GetCategory')->name('get-category');
     Route::get('/get-product', 'GetProduct')->name('get-product');
+   
+
 });
 
 Route::get('/dashboard', function () {
