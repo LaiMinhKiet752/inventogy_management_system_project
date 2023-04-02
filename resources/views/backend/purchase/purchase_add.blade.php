@@ -33,7 +33,7 @@
                                 <div class="col-md-4">
                                     <div class="md-3">
                                         <label for="example-text-input" class="form-label">Supplier Name </label>
-                                        <select id="supplier_id" name="supplier_id" class="form-select"
+                                        <select id="supplier_id" name="supplier_id" class="form-select select2"
                                             aria-label="Default select example">
                                             <option selected="">Open this select menu</option>
                                             @foreach ($supplier as $supp)
@@ -47,7 +47,7 @@
                                 <div class="col-md-4">
                                     <div class="md-3">
                                         <label for="example-text-input" class="form-label">Category Name </label>
-                                        <select name="category_id" id="category_id" class="form-select"
+                                        <select name="category_id" id="category_id" class="form-select select2"
                                             aria-label="Default select example">
                                             <option selected="">Open this select menu</option>
 
@@ -59,7 +59,7 @@
                                 <div class="col-md-4">
                                     <div class="md-3">
                                         <label for="example-text-input" class="form-label">Product Name </label>
-                                        <select name="product_id" id="product_id" class="form-select"
+                                        <select name="product_id" id="product_id" class="form-select select2"
                                             aria-label="Default select example">
                                             <option selected="">Open this select menu</option>
 
@@ -72,11 +72,17 @@
                                     <div class="md-3">
                                         <label for="example-text-input" class="form-label" style="margin-top:43px;">
                                         </label>
+
+
                                         <i
                                             class="btn btn-secondary btn-rounded waves-effect waves-light fas fa-plus-circle addeventmore">
                                             Add More</i>
                                     </div>
                                 </div>
+
+
+
+
 
                             </div> <!-- // end row  -->
 
@@ -121,10 +127,28 @@
                                     <button type="submit" class="btn btn-info" id="storeButton"> Purchase Store</button>
 
                                 </div>
+
+                            </form>
+
+
+
+
+
+
                         </div> <!-- End card-body -->
+
+
+
+
+
+
+
                     </div>
                 </div> <!-- end col -->
             </div>
+
+
+
         </div>
     </div>
 
@@ -238,28 +262,33 @@
                 var html = tamplate(data);
                 $("#addRow").append(html);
             });
-            $(document).on("click",".removeeventmore",function(event){
+
+            $(document).on("click", ".removeeventmore", function(event) {
                 $(this).closest(".delete_add_more_item").remove();
                 totalAmountPrice();
             });
-            $(document).on('keyup click','.unit_price, .buying_qty', function(){
+
+            $(document).on('keyup click', '.unit_price,.buying_qty', function() {
                 var unit_price = $(this).closest("tr").find("input.unit_price").val();
-                var qty = $(this).closest("tr").find("input.buying_qty").val(); 
+                var qty = $(this).closest("tr").find("input.buying_qty").val();
                 var total = unit_price * qty;
                 $(this).closest("tr").find("input.buying_price").val(total);
                 totalAmountPrice();
             });
-            //Calculate sum of amount in invoice
-            function totalAmountPrice(){
+
+            // Calculate sum of amout in invoice 
+
+            function totalAmountPrice() {
                 var sum = 0;
-                $(".buying_price").each(function(){
+                $(".buying_price").each(function() {
                     var value = $(this).val();
-                    if(!isNaN(value) && value.length != 0){
+                    if (!isNaN(value) && value.length != 0) {
                         sum += parseFloat(value);
                     }
                 });
-                $("#estimated_amount").val(sum);
+                $('#estimated_amount').val(sum);
             }
+
         });
     </script>
 
