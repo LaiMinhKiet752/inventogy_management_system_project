@@ -30,6 +30,7 @@
                     </ul>
                 </li>
 
+
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-mail-send-line"></i>
@@ -41,17 +42,17 @@
                     </ul>
                 </li>
 
+
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-mail-send-line"></i>
-                        <span>Manage Unit</span>
+                        <span>Manage Units</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('unit.all') }}">All Unit</a></li>
 
                     </ul>
                 </li>
-
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -76,6 +77,7 @@
                     </ul>
                 </li>
 
+
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-mail-send-line"></i>
@@ -83,17 +85,12 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('purchase.all') }}">All Purchase</a></li>
-
+                        <li><a href="{{ route('purchase.pending') }}">Approval Purchase</a></li>
                     </ul>
                 </li>
-
-
-
-
-
                 <li class="menu-title">Pages</li>
 
-                <li>    
+                <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-account-circle-line"></i>
                         <span>Authentication</span>
