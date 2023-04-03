@@ -7,6 +7,7 @@ use App\Http\Controllers\Pos\CategoryController;
 use App\Http\Controllers\Pos\SupplierController;
 use App\Http\Controllers\Pos\CustomerController;
 use App\Http\Controllers\Pos\DefaultController;
+use App\Http\Controllers\Pos\InvoiceController;
 use App\Http\Controllers\Pos\ProductController;
 use App\Http\Controllers\Pos\PurchaseController;
 use App\Http\Controllers\Pos\UnitController;
@@ -92,6 +93,12 @@ Route::controller(SupplierController::class)->group(function () {
     Route::get('/purchase/delete/{id}','PurchaseDelete')->name('purchase.delete');
     Route::get('/purchase/pending','PurchasePending')->name('purchase.pending');
     Route::get('/purchase/approve/{id}','PurchaseApprove')->name('purchase.approve');
+});
+
+
+ // Invoice All Route 
+ Route::controller(InvoiceController::class)->group(function () {
+    Route::get('/invoice/all', 'InvoiceAll')->name('invoice.all');
 });
  
  // Default All Route 
