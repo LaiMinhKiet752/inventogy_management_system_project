@@ -86,8 +86,10 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('purchase.all') }}">All Purchase</a></li>
                         <li><a href="{{ route('purchase.pending') }}">Approval Purchase</a></li>
+
                     </ul>
                 </li>
+
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -96,12 +98,10 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('invoice.all') }}">All Invoice</a></li>
-                        <li><a href="">Approval Invoice</a></li>
+                        <li><a href=" ">Approval Invoice</a></li>
+
                     </ul>
                 </li>
-
-
-
                 <li class="menu-title">Pages</li>
 
                 <li>
