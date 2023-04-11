@@ -132,6 +132,20 @@
                                         <textarea name="description" class="form-control" id="description" placeholder="Write Description Here"></textarea>
                                     </div>
                                 </div><br>
+
+                                <div class="row">
+                                    <div class="form-group col-md-3">
+                                        <label>Paid Status</label>
+                                        <select name="paid_status" id="paid_status" class="form-select">
+                                            <option value="">Select Status</option>
+                                            <option value="full_paid">Full Paid</option>
+                                            <option value="full_due">Full Due</option>
+                                            <option value="partial_paid">Partial Paid</option>
+                                        </select><br>
+                                        <input type="text" name="paid_amount" class="form-control paid_amount"
+                                            placeholder="Enter Paid Amount" style="display: none;">
+                                    </div>
+                                </div><br>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-info" id="storeButton"> Invoice Store</button>
 
@@ -245,7 +259,7 @@
                 $('#discount_amount').trigger('keyup');
             });
 
-            $(document).on('keyup','#discount_amount',function(){
+            $(document).on('keyup', '#discount_amount', function() {
                 totalAmountPrice();
             });
             // Calculate sum of amout in invoice 
@@ -260,8 +274,8 @@
                 });
                 var discount_amount = parseFloat($('#discount_amount').val());
                 if (!isNaN(discount_amount) && discount_amount.length != 0) {
-                        sum -= parseFloat(discount_amount);
-                    }
+                    sum -= parseFloat(discount_amount);
+                }
                 $('#estimated_amount').val(sum);
             }
 
@@ -306,6 +320,17 @@
                     }
                 })
             });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).on('change','#paid_status',function(){
+            var paid_status = $(this).val();
+            if(paid_status == 'partial_paid'){
+                $('.paid_amount').show();
+            }else{
+                $('.paid_amount').hide();
+            }
         });
     </script>
 @endsection
