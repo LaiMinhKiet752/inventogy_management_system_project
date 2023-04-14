@@ -22,7 +22,7 @@ class InvoiceController extends Controller
 {
     public function InvoiceAll()
     {
-        $allData = Invoice::orderBy('date', 'desc')->orderBy('id', 'desc')->where('status','1')->get();
+        $allData = Invoice::orderBy('date', 'desc')->orderBy('id', 'desc')->where('status', '1')->get();
         return view('backend.invoice.invoice_all', compact('allData'));
     } //End Method
     public function InvoiceAdd()
@@ -116,7 +116,7 @@ class InvoiceController extends Controller
                     $payment_details->date = date('Y-m-d', strtotime($request->date));
                     $payment_details->save();
                 });
-            }//End else
+            } //End else
 
         }
         $notification = array(
@@ -126,23 +126,64 @@ class InvoiceController extends Controller
         return redirect()->route('invoice.pending.list')->with($notification);
     } //End Method
 
-    public function PendingList(){
-        $allData = Invoice::orderBy('date', 'desc')->orderBy('id', 'desc')->where('status','0')->get();
+    public function PendingList()
+    {
+        $allData = Invoice::orderBy('date', 'desc')->orderBy('id', 'desc')->where('status', '0')->get();
         return view('backend.invoice.invoice_pending_list', compact('allData'));
-    }//End Method
+    } //End Method
 
-    public function InvoiceDelete($id){
+    public function InvoiceDelete($id)
+    {
         $invoice = Invoice::findOrFail($id);
         $invoice->delete();
 
-        InvoiceDetail::where('invoice_id',$invoice->id)->delete();
-        Payment::where('invoice_id',$invoice->id)->delete();
-        PaymentDetail::where('invoice_id',$invoice->id)->delete();
+        InvoiceDetail::where('invoice_id', $invoice->id)->delete();
+        Payment::where('invoice_id', $invoice->id)->delete();
+        PaymentDetail::where('invoice_id', $invoice->id)->delete();
         $notification = array(
             'message' => 'Invoice Deleted Successfully!',
             'alert-type' => 'success',
         );
         return redirect()->back()->with($notification);
-    }
+    } //End Method
 
+    public function InvoiceApprove($id)
+    {
+        $invoice = Invoice::with('invoice_details')->findOrFail($id);
+        return view('backend.invoice.invoice_approve', compact('invoice'));
+    } //End Method
+
+    public function ApprovalStore(Request $request, $id)
+    {
+        foreach ($request->selling_qty as $key => $val) {
+            $invoice_details = InvoiceDetail::where('id', $key)->first();
+            $product = Product::where('id', $invoice_details->product_id)->first();
+            if ($product->quantity < $request->selling_qty[$key]) {
+                $notification = array(
+                    'message' => 'Sorry You Approve Maximum Value!',
+                    'alert-type' => 'error',
+                );
+                return redirect()->back()->with($notification);
+            }
+        } //End foreach
+
+        $invoice = Invoice::findOrFail($id);
+        $invoice->updated_by = Auth::user()->id;
+        $invoice->status = '1';
+
+        DB::transaction(function () use ($request, $invoice, $id) {
+            foreach ($request->selling_qty as $key => $val) {
+                $invoice_details = InvoiceDetail::where('id', $key)->first();
+                $product = Product::where('id', $invoice_details->product_id)->first();
+                $product->quantity = ((float)$product->quantity) - ((float)$request->selling_qty[$key]);
+                $product->save();
+            } //End foreach
+            $invoice->save();
+        });
+        $notification = array(
+            'message' => 'Invoice Approve Successfully!',
+            'alert-type' => 'success',
+        );
+        return redirect()->route('invoice.pending.list')->with($notification);
+    } //End Method
 }
