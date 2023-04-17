@@ -7,12 +7,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Daily Invoice Report</h4>
+                        <h4 class="mb-sm-0">Stock Report</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);"> </a></li>
-                                <li class="breadcrumb-item active">Daily Invoice Report</li>
+                                <li class="breadcrumb-item active">Stock Report</li>
                             </ol>
                         </div>
 
@@ -58,13 +58,7 @@
                                 <div class="col-12">
                                     <div>
                                         <div class="p-2">
-                                            <h3 class="font-size-16"><strong>Daily Invoice Report
-                                                    <span
-                                                        class="btn btn-info">{{ date('d-m-Y', strtotime($start_date)) }}</span>
-                                                    -
-                                                    <span
-                                                        class="btn btn-success">{{ date('d-m-Y', strtotime($end_date)) }}</span></strong>
-                                            </h3>
+
                                         </div>
                                     </div>
 
@@ -87,14 +81,14 @@
                                                     <thead>
                                                         <tr>
                                                             <td><strong>SL </strong></td>
-                                                            <td class="text-center"><strong>Customer Name</strong></td>
-                                                            <td class="text-center"><strong>Invoice Number</strong>
+                                                            <td class="text-center"><strong>Supplier Name</strong></td>
+                                                            <td class="text-center"><strong>Unit</strong>
                                                             </td>
-                                                            <td class="text-center"><strong>Date</strong>
+                                                            <td class="text-center"><strong>Category</strong>
                                                             </td>
-                                                            <td class="text-center"><strong>Description</strong>
+                                                            <td class="text-center"><strong>Product Name</strong>
                                                             </td>
-                                                            <td class="text-center"><strong>Amount</strong>
+                                                            <td class="text-center"><strong>Stock</strong>
                                                             </td>
 
                                                         </tr>
@@ -102,43 +96,27 @@
                                                     <tbody>
                                                         <!-- foreach ($order->lineItems as $line) or some such thing here -->
 
-                                                        @php
-                                                            $total_sum = '0';
-                                                        @endphp
                                                         @foreach ($allData as $key => $item)
                                                             <tr>
-                                                                <td class="text-center">{{ $key + 1 }}</td>
-                                                                <td class="text-center">
-                                                                    {{ $item['payment']['customer']['name'] }}
+                                                                <td> {{ $key + 1 }} </td>
+                                                                <td class="text-center"> {{ $item['supplier']['name'] }}
                                                                 </td>
-                                                                <td class="text-center">#{{ $item->invoice_no }}
+                                                                <td class="text-center"> {{ $item['unit']['name'] }} </td>
+                                                                <td class="text-center"> {{ $item['category']['name'] }}
                                                                 </td>
-                                                                <td class="text-center">
-                                                                    {{ date('d-m-Y', strtotime($item->date)) }}</td>
-                                                                <td class="text-center">{{ $item->description }}</td>
-                                                                <td class="text-center">
-                                                                    {{ $item['payment']['total_amount'] }}</td>
+                                                                <td class="text-center"> {{ $item->name }} </td>
+                                                                <td class="text-center"> {{ $item->quantity }} </td>
                                                             </tr>
-                                                            @php
-                                                                $total_sum += $item['payment']['total_amount'];
-                                                            @endphp
                                                         @endforeach
-                                                        <tr>
-                                                            <td class="no-line"></td>
-                                                            <td class="no-line"></td>
-                                                            <td class="no-line"></td>
-                                                            <td class="no-line"></td>
-                                                            <td class="no-line text-center">
-                                                                <strong>Grand Amount</strong>
-                                                            </td>
-                                                            <td class="no-line text-end">
-                                                                <h4 class="m-0">${{ $total_sum }}</h4>
-                                                            </td>
-                                                        </tr>
                                                     </tbody>
                                                 </table>
+
                                             </div>
 
+                                            @php
+                                                $date = new DateTime('now', new DateTimeZone('Asia/Ho_Chi_Minh'));
+                                            @endphp
+                                                <i> Printing Time: {{ $date->format('F j, Y, g:i a') }}</i>
                                             <div class="d-print-none">
                                                 <div class="float-end">
                                                     <a href="javascript:window.print()"

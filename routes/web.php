@@ -10,6 +10,7 @@ use App\Http\Controllers\Pos\DefaultController;
 use App\Http\Controllers\Pos\InvoiceController;
 use App\Http\Controllers\Pos\ProductController;
 use App\Http\Controllers\Pos\PurchaseController;
+use App\Http\Controllers\Pos\StockController;
 use App\Http\Controllers\Pos\UnitController;
 
 Route::get('/', function () {
@@ -23,7 +24,7 @@ Route::controller(DemoController::class)->group(function () {
 });
 
 
-// Admin All Route 
+// Admin All Route
 Route::controller(AdminController::class)->group(function () {
     Route::get('/admin/logout', 'destroy')->name('admin.logout');
     Route::get('/admin/profile', 'Profile')->name('admin.profile');
@@ -34,7 +35,7 @@ Route::controller(AdminController::class)->group(function () {
 });
 
 
-// Supplier All Route 
+// Supplier All Route
 Route::controller(SupplierController::class)->group(function () {
     Route::get('/supplier/all', 'SupplierAll')->name('supplier.all');
     Route::get('/supplier/add', 'SupplierAdd')->name('supplier.add');
@@ -44,7 +45,7 @@ Route::controller(SupplierController::class)->group(function () {
     Route::get('/supplier/delete/{id}', 'SupplierDelete')->name('supplier.delete');
 });
 
-// Customer All Route 
+// Customer All Route
 Route::controller(CustomerController::class)->group(function () {
     Route::get('/customer/all', 'CustomerAll')->name('customer.all');
     Route::get('/customer/add', 'CustomerAdd')->name('customer.add');
@@ -54,7 +55,7 @@ Route::controller(CustomerController::class)->group(function () {
     Route::get('/customer/delete/{id}', 'CustomerDelete')->name('customer.delete');
 });
 
-// Unit All Route 
+// Unit All Route
 Route::controller(UnitController::class)->group(function () {
     Route::get('/unit/all', 'UnitAll')->name('unit.all');
     Route::get('/unit/add', 'UnitAdd')->name('unit.add');
@@ -64,7 +65,7 @@ Route::controller(UnitController::class)->group(function () {
     Route::get('/unit/delete/{id}', 'UnitDelete')->name('unit.delete');
 });
 
-// Category All Route 
+// Category All Route
 Route::controller(CategoryController::class)->group(function () {
     Route::get('/category/all', 'CategoryAll')->name('category.all');
     Route::get('/category/add', 'CategoryAdd')->name('category.add');
@@ -74,7 +75,7 @@ Route::controller(CategoryController::class)->group(function () {
     Route::get('/category/delete/{id}', 'CategoryDelete')->name('category.delete');
 });
 
-// Product All Route 
+// Product All Route
 Route::controller(ProductController::class)->group(function () {
     Route::get('/product/all', 'ProductAll')->name('product.all');
     Route::get('/product/add', 'ProductAdd')->name('product.add');
@@ -84,7 +85,7 @@ Route::controller(ProductController::class)->group(function () {
     Route::get('/product/delete/{id}', 'ProductDelete')->name('product.delete');
 });
 
-// Purchase All Route 
+// Purchase All Route
 Route::controller(PurchaseController::class)->group(function () {
     Route::get('/purchase/all', 'PurchaseAll')->name('purchase.all');
     Route::get('/purchase/add', 'PurchaseAdd')->name('purchase.add');
@@ -95,7 +96,7 @@ Route::controller(PurchaseController::class)->group(function () {
 });
 
 
-// Invoice All Route 
+// Invoice All Route
 Route::controller(InvoiceController::class)->group(function () {
     Route::get('/invoice/all', 'InvoiceAll')->name('invoice.all');
     Route::get('/invoice/add', 'InvoiceAdd')->name('invoice.add');
@@ -110,7 +111,14 @@ Route::controller(InvoiceController::class)->group(function () {
     Route::get('/daily/invoice/pdf', 'DailyInvoicePdf')->name('daily.invoice.pdf');
 });
 
-// Default All Route 
+
+// Stock All Route
+Route::controller(StockController::class)->group(function () {
+    Route::get('/stock/report', 'StockReport')->name('stock.report');
+    Route::get('/stock/report/pdf', 'StockReportPdf')->name('stock.report.pdf');
+});
+
+// Default All Route
 Route::controller(DefaultController::class)->group(function () {
     Route::get('/get-category', 'GetCategory')->name('get-category');
     Route::get('/get-product', 'GetProduct')->name('get-product');
