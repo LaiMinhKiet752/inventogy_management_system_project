@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use Intervention\Image\Facades\Image;
@@ -86,7 +87,8 @@ class CustomerController extends Controller
             return redirect()->route('customer.all')->with($notification);
         } //end else
     } //End method
-    public function CustomerDelete($id){
+    public function CustomerDelete($id)
+    {
         $customers = Customer::findOrFail($id);
         $img = $customers->customer_image;
         unlink($img);
@@ -97,5 +99,16 @@ class CustomerController extends Controller
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notification);
-    }
+    } //End Method
+
+    public function CreditCustomer()
+    {
+        $allData = Payment::whereIn('paid_status', ['full_due', 'partial_paid'])->get();
+        return view('backend.customer.customer_credit', compact('allData'));
+    } //End Method
+
+    public function CreditCustomerPrintPdf(){
+        $allData = Payment::whereIn('paid_status', ['full_due', 'partial_paid'])->get();
+        return view('backend.pdf.customer_credit_pdf', compact('allData'));
+    }//End Method
 }
