@@ -88,6 +88,10 @@
                                                             </td>
                                                             <td class="text-center"><strong>Product Name</strong>
                                                             </td>
+                                                            <td class="text-center"><strong>In Quantity</strong>
+                                                            </td>
+                                                            <td class="text-center"><strong>Out Quantity</strong>
+                                                            </td>
                                                             <td class="text-center"><strong>Stock</strong>
                                                             </td>
 
@@ -97,6 +101,16 @@
                                                         <!-- foreach ($order->lineItems as $line) or some such thing here -->
 
                                                         @foreach ($allData as $key => $item)
+                                                            @php
+                                                                $buying_total = App\Models\Purchase::where('category_id', $item->category_id)
+                                                                    ->where('product_id', $item->id)
+                                                                    ->where('status', '1')
+                                                                    ->sum('buying_qty');
+                                                                $selling_total = App\Models\InvoiceDetail::where('category_id', $item->category_id)
+                                                                    ->where('product_id', $item->id)
+                                                                    ->where('status', '1')
+                                                                    ->sum('selling_qty');
+                                                            @endphp
                                                             <tr>
                                                                 <td> {{ $key + 1 }} </td>
                                                                 <td class="text-center"> {{ $item['supplier']['name'] }}
@@ -105,6 +119,8 @@
                                                                 <td class="text-center"> {{ $item['category']['name'] }}
                                                                 </td>
                                                                 <td class="text-center"> {{ $item->name }} </td>
+                                                                <td class="text-center"> {{ $buying_total }} </td>
+                                                                <td class="text-center"> {{ $selling_total }} </td>
                                                                 <td class="text-center"> {{ $item->quantity }} </td>
                                                             </tr>
                                                         @endforeach
@@ -116,7 +132,7 @@
                                             @php
                                                 $date = new DateTime('now', new DateTimeZone('Asia/Ho_Chi_Minh'));
                                             @endphp
-                                                <i> Printing Time: {{ $date->format('F j, Y, g:i a') }}</i>
+                                            <i> Printing Time: {{ $date->format('F j, Y, g:i a') }}</i>
                                             <div class="d-print-none">
                                                 <div class="float-end">
                                                     <a href="javascript:window.print()"
