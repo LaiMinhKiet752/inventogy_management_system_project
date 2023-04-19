@@ -144,7 +144,7 @@ class CustomerController extends Controller
             }
             $payment->save();
             $payment_details->invoice_id = $invoice_id;
-            $payment_details->date = date('Y-m-d',strtotime($request->date));
+            $payment_details->date = date('Y-m-d', strtotime($request->date));
             $payment_details->updated_by = Auth::user()->id;
             $payment_details->save();
             $notification = array(
@@ -154,4 +154,10 @@ class CustomerController extends Controller
             return redirect()->route('credit.customer')->with($notification);
         }
     } //End Method
+
+    public function CustomerInvoiceDetails($invoice_id)
+    {
+        $payment = Payment::where('invoice_id', $invoice_id)->first();
+        return view('backend.pdf.invoice_details_pdf', compact('payment'));
+    }
 }
